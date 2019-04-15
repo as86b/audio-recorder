@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA111A3B2264005500ADFFEF /* Audio-Icons in Resources */ = {isa = PBXBuildFile; fileRef = AA111A3A2264005400ADFFEF /* Audio-Icons */; };
 		AA94611E225FFBD600AC2BAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94611D225FFBD600AC2BAD /* AppDelegate.swift */; };
 		AA946120225FFBD600AC2BAD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA94611F225FFBD600AC2BAD /* ViewController.swift */; };
 		AA946123225FFBD600AC2BAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA946121225FFBD600AC2BAD /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA111A3A2264005400ADFFEF /* Audio-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Audio-Icons"; sourceTree = "<group>"; };
 		AA94611A225FFBD600AC2BAD /* AudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA94611D225FFBD600AC2BAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA94611F225FFBD600AC2BAD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				AA94611F225FFBD600AC2BAD /* ViewController.swift */,
 				AA946121225FFBD600AC2BAD /* Main.storyboard */,
 				AA946127225FFBD800AC2BAD /* Assets.xcassets */,
+				AA111A3A2264005400ADFFEF /* Audio-Icons */,
 				AA946129225FFBD800AC2BAD /* LaunchScreen.storyboard */,
 				AA94612C225FFBD800AC2BAD /* Info.plist */,
 				AA946124225FFBD600AC2BAD /* AudioPlayer.xcdatamodeld */,
@@ -234,6 +237,7 @@
 			files = (
 				AA94612B225FFBD800AC2BAD /* LaunchScreen.storyboard in Resources */,
 				AA946128225FFBD800AC2BAD /* Assets.xcassets in Resources */,
+				AA111A3B2264005500ADFFEF /* Audio-Icons in Resources */,
 				AA946123225FFBD600AC2BAD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

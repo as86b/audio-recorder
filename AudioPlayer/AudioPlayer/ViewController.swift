@@ -17,8 +17,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
     @IBOutlet weak var playButton: UIBarButtonItem!
     
     //From tutorial
-    var recordingSession: AVAudioSession!
-    var audioRecorder: AVAudioRecorder!
+    var recordingSession: AVAudioSession?
+    var audioRecorder: AVAudioRecorder?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,28 +37,45 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
             [unowned self] allowed in
             if allowed {
                 _ = UIAlertController(title: "Recording permission", message: "Permission was given", preferredStyle: .alert)
-                //            print("Permission was allowed")
+                
+                print("Permission was allowed")
                 
                 self.recordButton.isEnabled = true
                 self.playButton.isEnabled = true
-            } else {
+            }
+            else {
                 _ = UIAlertController(title: "Recording permission", message: "Permission was not given", preferredStyle: .alert)
-                //            print("Permission was not allowed")
-                exit(0)
+                
+                print("Permission was not allowed")
+                
+                return
             }
         }
     }
     
     @IBAction func recordButtonPressed(_ sender: Any) {
         
+//        We are wanting to record
         if(recordButton.image == UIImage(named: "record")) {
             
-            startRecording()
+            recordButton.image = UIImage(named: "stop")
             
             playButton.isEnabled = false
-        } else if (recordButton.image == UIImage(named: "stop")) {
             
-        } else {
+            //Start recording
+            audioRecorder.record()
+            
+        }
+        else if (recordButton.image == UIImage(named: "stop")) {
+        
+            recordButton.image = UIImage(named: "record")
+            
+            playButton.isEnabled = true
+            
+            //Stop recording
+            audioRecorder.stop()
+        }
+        else {
             print("Something went very wrong")
         }
         
@@ -66,31 +83,74 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
+        
+        //Recording was paused so we want to play it
         if(playButton.image == UIImage(named: "play")) {
             
+            playButton.image = UIImage(named: "stop")
+            
+            recordButton.isEnabled = true
+        
+        }
+        //Recording was playing so we want to pause it
+        else if (playButton.image == UIImage(named: "stop")) {
+            
+            playButton.image = UIImage(named: "play")
             
             recordButton.isEnabled = false
-        } else if (playButton.image == UIImage(named: "pause")) {
-            
         } else {
             print("Something went very wrong")
         }
+        
+//        guard let audioFile = audioFile else {
+//            print("Cant play audio")
+//            return
+//        }
+//        
+//        guard let audioRec = audioRec, audioRec.isRecording == false else {
+//            print("Cant play while recording")
+//            return
+//        }
+//        
+//        if let audioPlayer = audioPlayer {
+//            if (audioPlayer.isPlaying) {
+//                audioPlayer.stop()
+//                playBarButton.image = UIImage(named: "play")
+//                recordBarButton.isEnabled = true
+//                return
+//            }
+//        }
+//        
+//        do {
+//            audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
+//            audioPlayer?.delegate = (self as! AVAudioPlayerDelegate)
+//            audioPlayer?.prepareToPlay()
+//            audioPlayer?.play()
+//            recordBarButton.isEnabled = false
+//            playBarButton.image = UIImage(named: "stop")
+//        } catch {
+//            print("error creating audio player")
+//            return
+//        }
     }
     
     
 //    Might need to place this in some IBAction or something like that
     func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
         
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
+        //.caf file extenstion type as it uses Core Audio Format
+        //.m4a was original type
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.caf")
+        
+        //From instructions
+        let recordingSettings =
+            [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
+             AVEncoderBitRateKey: 16,
+             AVNumberOfChannelsKey: 2,
+             AVSampleRateKey: 44100.0] as [String : Any]
         
         do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: recordingSettings)
             audioRecorder.delegate = self
             audioRecorder.record()
         } catch {
@@ -128,20 +188,5 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
             finishRecording(success: false)
         }
     }
-    
-//  Note that AVAudioSession is a class and sharedInstance() is a class method. A class method is called directly on the class rather than on an instance of the class. The sharedInstance() provides a preconfigured AVAudioSession instance.
-//    let audioSession = AVAudioSession.sharedInstance()
-    
-//    This might need to be in viewdidload if i use this instead to get it to work
-    //requestRecordPremission is a function defined on the fly in the trailing closure
-//    audioSession.requestRecordPermission() {
-//        [unowned self] allowed in
-//        if allowed {
-//        // proceed to do whatever is needed to record
-//        } else {
-//        // don't let the app record because permission was denied
-//        }
-//    }
-    
 }
 
